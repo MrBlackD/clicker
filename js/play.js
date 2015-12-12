@@ -208,7 +208,8 @@ var playState={
 	}
 
 	function enemyUp(button){
-		buy(enemyInfo.upCost);
+		if(!buy(enemyInfo.upCost))
+			return;
 		button.scale.setTo(0.7,0.7);
 		if(enemyInfo.rarity=='normal'){
 			enemyInfo.level++;
@@ -234,7 +235,8 @@ var playState={
 	function drinkPotion(button){
 		if(playerInfo.health==playerMaxHealth())
 			return;
-		buy(potion.cost);
+		if(!buy(potion.cost))
+			return;
 		if(playerInfo.health+potion.heal>playerMaxHealth()){
 			playerInfo.health=playerMaxHealth();
 		}else{
@@ -245,7 +247,8 @@ var playState={
 		saveGameState();
 	}
 	function upgradePotion(button){
-		buy(potion.upCost);
+		if(!buy(potion.upCost))
+			return;
 		potion.heal*=2;
 		potion.cost*=2;
 		potion.upCost*=2;
@@ -259,13 +262,14 @@ var playState={
 
 	function buy(itemCost){
 		if(!player.alive)
-			return;
+			return false;
 		if(playerInfo.coins-itemCost<0)
-			return;
+			return false;
 		else
 			playerInfo.coins-=itemCost;
 		playerCoins.text=playerInfo.coins;
 		saveGameState();
+		return true;
 	}
 
 	function attack (button) {
@@ -512,7 +516,8 @@ var playState={
 
 	function toggleCreep(button){
 		if(enemyInfo.rarity=='normal'){
-			buy(enemies.elite.summonCost);
+			if(!buy(enemies.elite.summonCost))
+				return;
 			plus(playerCoins,-enemies.elite.summonCost);
 			button.text='Normal( 0 coins )';
 
