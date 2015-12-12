@@ -491,7 +491,7 @@ var playState={
 		var dmg=0;
 		dmg+=playerInfo.damage;
 		for(var slot in playerInfo.equipment){
-			if(slot)
+			if(playerInfo.equipment[slot])
 				dmg+=playerInfo.equipment[slot].damage;
 		}
 
@@ -503,7 +503,7 @@ var playState={
 		var hp=0;
 		hp+=playerInfo.maxHealth;
 		for(slot in playerInfo.equipment){
-			if(slot)
+			if(playerInfo.equipment[slot])
 				hp+=playerInfo.equipment[slot].health;
 		}
 
